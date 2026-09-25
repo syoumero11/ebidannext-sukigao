@@ -2,7 +2,8 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>✨ EBiDANNEXT好き顔くらべ ✨</title>
 
 <style>
@@ -12,6 +13,8 @@
 
 body{
   margin:0;
+  background:linear-gradient(180deg,#f7edff,#ffffff);
+  color:#432553;
   font-family:
     -apple-system,
     BlinkMacSystemFont,
@@ -19,38 +22,44 @@ body{
     "Hiragino Kaku Gothic ProN",
     "Yu Gothic",
     sans-serif;
-  background:linear-gradient(180deg,#f8efff,#ffffff);
-  color:#3b2450;
 }
 
 header{
-  padding:18px 12px 10px;
   text-align:center;
+  padding:18px 10px 8px;
 }
 
 h1{
   margin:0;
+  color:#8a3fc4;
   font-size:clamp(22px,6vw,34px);
-  color:#8b42c7;
 }
 
 #status{
   margin-top:8px;
   font-size:14px;
-  color:#765681;
+  color:#76517f;
 }
 
 main{
-  width:min(100%,900px);
+  width:min(900px,100%);
   margin:auto;
-  padding:10px 12px 30px;
+  padding:10px 12px 35px;
 }
 
-.question{
+.message{
   text-align:center;
-  font-size:20px;
+  font-size:18px;
   font-weight:bold;
-  margin:12px 0 16px;
+  line-height:1.6;
+  margin:14px 0;
+}
+
+.count{
+  text-align:center;
+  color:#8a3fc4;
+  font-weight:bold;
+  margin-bottom:12px;
 }
 
 .cards{
@@ -60,17 +69,20 @@ main{
 }
 
 .card{
-  background:white;
-  border:2px solid #ead7f7;
+  background:#fff;
+  border:3px solid #ead8f5;
   border-radius:16px;
-  padding:7px;
-  box-shadow:0 4px 12px rgba(100,50,130,.10);
+  padding:6px;
   cursor:pointer;
+  box-shadow:0 4px 12px rgba(90,40,120,.12);
   transition:.15s;
 }
 
-.card:active{
-  transform:scale(.97);
+.card.selected{
+  border-color:#9a4bd0;
+  background:#f4e8fc;
+  transform:translateY(-3px);
+  box-shadow:0 6px 16px rgba(120,50,160,.25);
 }
 
 .card img{
@@ -79,21 +91,22 @@ main{
   object-fit:contain;
   display:block;
   border-radius:11px;
-  background:#f7f2fa;
+  background:#f6f1f8;
 }
 
 .name{
   text-align:center;
-  font-size:14px;
+  font-size:13px;
   font-weight:bold;
-  padding:8px 2px 4px;
   line-height:1.3;
+  padding:7px 2px 4px;
   word-break:break-all;
 }
 
 .buttons{
   display:flex;
   justify-content:center;
+  align-items:center;
   gap:10px;
   flex-wrap:wrap;
   margin-top:20px;
@@ -102,20 +115,24 @@ main{
 button{
   border:0;
   border-radius:999px;
-  padding:12px 22px;
+  padding:13px 22px;
   font-size:16px;
   font-weight:bold;
   cursor:pointer;
 }
 
-.backBtn{
-  background:#eee4f4;
-  color:#634575;
+.nextBtn{
+  background:#8b42c7;
+  color:white;
 }
 
-.backBtn:disabled{
-  opacity:.4;
-  cursor:default;
+.nextBtn:disabled{
+  opacity:.45;
+}
+
+.backBtn{
+  background:#eee4f4;
+  color:#624372;
 }
 
 .restartBtn{
@@ -125,23 +142,24 @@ button{
 
 .resultTitle{
   text-align:center;
-  font-size:24px;
   color:#8b42c7;
-  margin:10px 0 18px;
+  font-size:24px;
+  font-weight:bold;
+  margin:8px 0 18px;
 }
 
 .resultGrid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:12px;
+  gap:10px;
 }
 
 .resultCard{
   background:white;
-  border:2px solid #ead7f7;
-  border-radius:15px;
-  padding:7px;
-  box-shadow:0 4px 12px rgba(100,50,130,.10);
+  border:2px solid #ead8f5;
+  border-radius:14px;
+  padding:6px;
+  box-shadow:0 4px 12px rgba(90,40,120,.10);
 }
 
 .resultCard img{
@@ -150,63 +168,57 @@ button{
   object-fit:contain;
   display:block;
   border-radius:10px;
-  background:#f7f2fa;
+  background:#f6f1f8;
 }
 
 .rank{
   text-align:center;
-  font-size:20px;
-  font-weight:900;
   color:#8b42c7;
-  margin-top:6px;
+  font-size:19px;
+  font-weight:900;
+  margin-top:5px;
 }
 
 .resultName{
   text-align:center;
-  font-size:13px;
+  font-size:12px;
   font-weight:bold;
   line-height:1.3;
-  min-height:34px;
+  min-height:32px;
   padding:3px 1px;
   word-break:break-all;
 }
 
+.center{
+  text-align:center;
+}
+
+.bigMessage{
+  font-size:20px;
+  font-weight:bold;
+  line-height:1.7;
+  margin:30px 0;
+  text-align:center;
+}
+
 @media(max-width:650px){
+
   .cards{
     grid-template-columns:repeat(2,1fr);
     gap:9px;
   }
 
-  .question{
-    font-size:18px;
-  }
-
-  .card .name{
-    font-size:13px;
-  }
-
   .resultGrid{
     grid-template-columns:repeat(3,1fr);
-    gap:7px;
+    gap:6px;
   }
 
   .resultCard{
-    padding:5px;
-    border-radius:12px;
+    padding:4px;
   }
 
   .rank{
     font-size:16px;
-  }
-
-  .resultName{
-    font-size:11px;
-  }
-}
-
-@media(max-width:360px){
-  .resultGrid{
-    gap:5px;
   }
 
   .resultName{
@@ -220,7 +232,7 @@ button{
 
 <header>
   <h1>✨ EBiDANNEXT好き顔くらべ ✨</h1>
-  <div id="status">読み込み中…</div>
+  <div id="status">準備中…</div>
 </header>
 
 <main id="app"></main>
@@ -228,111 +240,73 @@ button{
 <script src="people.js"></script>
 
 <script>
+
 "use strict";
 
-const PEOPLE = Array.isArray(window.PEOPLE) ? window.PEOPLE : [];
+/* =========================
+   写真データ
+========================= */
+
+const PEOPLE = Array.isArray(window.PEOPLE)
+  ? window.PEOPLE
+  : [];
 
 /*
   people.js の
   images/001.jpg
-  のような指定を、
-  GitHub Pages の実際の画像URLに変換
+  のような指定を
+  GitHub Pages のURLへ変換
 */
+
 PEOPLE.forEach(person => {
-  const fileName = String(person.image || "").split("/").pop();
+
+  const fileName =
+    String(person.image || "")
+      .split("/")
+      .pop();
 
   person.image =
     "https://syoumero11.github.io/ebidannext-sukigao/" +
     fileName;
 });
 
+
+/* =========================
+   基本データ
+========================= */
+
 const app = document.getElementById("app");
 const status = document.getElementById("status");
 
-/* -----------------------------
+let groups = [];
+
+for(let i = 0; i < PEOPLE.length; i += 4){
+  groups.push(PEOPLE.slice(i,i+4));
+}
+
+
+/* =========================
    ゲーム状態
------------------------------ */
+========================= */
 
-let phase = "preliminary";
-
-/* 予選 */
 let groupIndex = 0;
-let winners = [];
 
-/* FINAL9 */
-let finalistCandidates = [];
-let finalistIndex = 0;
-let finalists = [];
+let selected = [];
 
-/* TOP9 */
-let rankingCandidates = [];
-let rankingIndex = 0;
+let candidates = [];
+
 let ranking = [];
 
-/* 戻る用 */
 let history = [];
 
 
-/* -----------------------------
-   122人 → 4人ずつ
------------------------------ */
+/* =========================
+   HTMLエスケープ
+========================= */
 
-function makeGroups(){
-  const groups = [];
+function esc(value){
 
-  for(let i = 0; i < PEOPLE.length; i += 4){
-    groups.push(PEOPLE.slice(i, i + 4));
-  }
-
-  return groups;
-}
-
-const groups = makeGroups();
-
-
-/* -----------------------------
-   状態保存
------------------------------ */
-
-function saveState(){
-  history.push(JSON.stringify({
-    phase,
-    groupIndex,
-    winners,
-    finalistCandidates,
-    finalistIndex,
-    finalists,
-    rankingCandidates,
-    rankingIndex,
-    ranking
-  }));
-}
-
-function restoreState(){
-  if(history.length === 0) return;
-
-  const s = JSON.parse(history.pop());
-
-  phase = s.phase;
-  groupIndex = s.groupIndex;
-  winners = s.winners;
-  finalistCandidates = s.finalistCandidates;
-  finalistIndex = s.finalistIndex;
-  finalists = s.finalists;
-  rankingCandidates = s.rankingCandidates;
-  rankingIndex = s.rankingIndex;
-  ranking = s.ranking;
-
-  render();
-}
-
-
-/* -----------------------------
-   共通UI
------------------------------ */
-
-function esc(str){
-  return String(str)
+  return String(value)
     .replace(/&/g,"&amp;")
     .replace(/</g,"&lt;")
     .replace(/>/g,"&gt;")
@@ -340,418 +314,787 @@ function esc(str){
     .replace(/'/g,"&#39;");
 }
 
-function cardHTML(person, onclick){
+
+/* =========================
+   状態保存
+========================= */
+
+function save(){
+
+  history.push({
+    groupIndex:groupIndex,
+    selected:selected.map(x => x.id),
+    candidates:candidates.map(x => x.id),
+    ranking:ranking.map(x => x.id)
+  });
+
+}
+
+
+function restore(){
+
+  if(history.length === 0){
+    return false;
+  }
+
+  const state =
+    history.pop();
+
+  groupIndex =
+    state.groupIndex;
+
+  selected =
+    state.selected
+      .map(id => PEOPLE.find(x => x.id === id))
+      .filter(Boolean);
+
+  candidates =
+    state.candidates
+      .map(id => PEOPLE.find(x => x.id === id))
+      .filter(Boolean);
+
+  ranking =
+    state.ranking
+      .map(id => PEOPLE.find(x => x.id === id))
+      .filter(Boolean);
+
+  return true;
+}
+
+
+/* =========================
+   戻る
+========================= */
+
+function goBack(){
+
+  if(restore()){
+
+    showPreliminary();
+
+  }
+
+}
+
+
+/* =========================
+   カード
+========================= */
+
+function makeCard(person,index){
+
+  const isSelected =
+    selected.some(x => x.id === person.id);
+
   return `
-    <div class="card" onclick="${onclick}">
-      <img src="${esc(person.image)}" alt="">
-      <div class="name">${esc(person.name)}</div>
+    <div
+      class="card ${isSelected ? "selected" : ""}"
+      onclick="togglePerson(${index})"
+    >
+
+      <img
+        src="${esc(person.image)}"
+        alt=""
+      >
+
+      <div class="name">
+        ${esc(person.name)}
+      </div>
+
     </div>
   `;
 }
 
-function buttonsHTML(){
-  return `
-    <div class="buttons">
-      <button class="backBtn"
-        onclick="goBack()"
-        ${history.length === 0 ? "disabled" : ""}>
-        ↩️ 1つ戻る
-      </button>
-    </div>
-  `;
+
+/* =========================
+   選択
+========================= */
+
+function togglePerson(index){
+
+  const group =
+    groups[groupIndex];
+
+  const person =
+    group[index];
+
+  const existing =
+    selected.findIndex(
+      x => x.id === person.id
+    );
+
+  if(existing >= 0){
+
+    selected.splice(existing,1);
+
+  }else{
+
+    /*
+      最大2人
+    */
+
+    if(selected.length >= 2){
+
+      return;
+    }
+
+    selected.push(person);
+
+  }
+
+  showPreliminary(false);
+
 }
 
 
-/* -----------------------------
-   予選
------------------------------ */
+/* =========================
+   予選画面
+========================= */
 
-function renderPreliminary(){
+function showPreliminary(saveHistory = true){
 
   if(groupIndex >= groups.length){
-    startFinal9();
+
+    finishPreliminary();
     return;
   }
 
-  const group = groups[groupIndex];
+  if(saveHistory){
+
+    /*
+      現在の状態を戻れるように保存
+    */
+
+  }
+
+  const group =
+    groups[groupIndex];
 
   status.textContent =
     `予選 ${groupIndex + 1} / ${groups.length}`;
 
   app.innerHTML = `
-    <div class="question">
-      この中で一番好きな顔を選んでね 💜
+
+    <div class="message">
+      気になる人を
+      <br>
+      <strong>最大2人まで</strong>
+      選んでね 💜
+    </div>
+
+    <div class="count">
+      選択中：${selected.length} / 2人
     </div>
 
     <div class="cards">
-      ${group.map((person,i) =>
-        cardHTML(person,`choosePreliminary(${i})`)
+
+      ${group.map((person,index) =>
+        makeCard(person,index)
       ).join("")}
+
     </div>
 
-    ${buttonsHTML()}
+    <div class="buttons">
+
+      <button
+        class="backBtn"
+        onclick="goBack()"
+        ${history.length === 0 ? "disabled" : ""}
+      >
+        ↩️ 1つ戻る
+      </button>
+
+      <button
+        class="nextBtn"
+        onclick="nextGroup()"
+      >
+        次の4人へ →
+      </button>
+
+    </div>
   `;
 }
 
-function choosePreliminary(index){
 
-  saveState();
+/* =========================
+   次の4人
+========================= */
 
-  const group = groups[groupIndex];
+function nextGroup(){
 
-  winners.push(group[index]);
+  /*
+    現在の状態を保存
+  */
+
+  history.push({
+    groupIndex:groupIndex,
+    selected:selected.map(x => x.id),
+    candidates:candidates.map(x => x.id),
+    ranking:ranking.map(x => x.id)
+  });
+
+  /*
+    選んだ人を候補に追加
+  */
+
+  selected.forEach(person => {
+
+    if(!candidates.some(x => x.id === person.id)){
+
+      candidates.push(person);
+
+    }
+
+  });
+
+  selected = [];
 
   groupIndex++;
 
-  render();
+  showPreliminary(false);
 }
 
 
-/* -----------------------------
-   FINAL9開始
------------------------------ */
+/* =========================
+   予選終了
+========================= */
+
+function finishPreliminary(){
+
+  /*
+    9人未満なら再挑戦
+  */
+
+  if(candidates.length < 9){
+
+    status.textContent =
+      "もう一度チャレンジ！";
+
+    app.innerHTML = `
+
+      <div class="bigMessage">
+
+        😿 もう少しだけ！
+
+        <br><br>
+
+        今回は
+        <strong>${candidates.length}人</strong>
+        しか選ばれませんでした。
+
+        <br>
+
+        TOP9を作るには
+        <strong>9人以上</strong>
+        必要です。
+
+        <br><br>
+
+        💜 もう一度やって、
+        気になる人を9人以上選んでみてね！
+
+      </div>
+
+      <div class="buttons">
+
+        <button
+          class="restartBtn"
+          onclick="restart()"
+        >
+          🔄 もう一度挑戦する
+        </button>
+
+      </div>
+
+    `;
+
+    return;
+  }
+
+
+  /*
+    9人以上なら
+    FINAL9へ
+  */
+
+  startFinal9();
+
+}
+
+
+/* =========================
+   FINAL9
+========================= */
+
+/*
+  候補者を2人ずつ比較して、
+  最終的に上位9人を決定する。
+
+  挿入式なので必ず終了する。
+*/
+
+let finalSorted = [];
+
+let finalQueue = [];
+
+let finalPosition = 0;
+
 
 function startFinal9(){
 
-  phase = "final9";
+  finalSorted = [];
 
-  finalistCandidates = [...winners];
-  finalistIndex = 0;
-  finalists = [];
+  finalQueue = [...candidates];
 
-  renderFinal9();
+  finalPosition = 0;
+
+  showFinal9();
+
 }
 
 
-/*
-  31人前後の予選勝者から
-  好み順に並べながら上位9人を残す
-*/
-function renderFinal9(){
+function showFinal9(){
 
-  if(finalistCandidates.length === 0){
+  /*
+    全員処理完了
+  */
+
+  if(finalQueue.length === 0){
+
+    /*
+      上位9人
+    */
+
+    ranking =
+      finalSorted.slice(0,9);
+
     startRanking();
+
     return;
   }
+
 
   /*
     最初の1人
   */
-  if(finalists.length === 0){
-    finalists.push(finalistCandidates[0]);
-    finalistIndex = 1;
-  }
 
-  if(finalistIndex >= finalistCandidates.length){
-    startRanking();
+  if(finalSorted.length === 0){
+
+    finalSorted.push(
+      finalQueue.shift()
+    );
+
+    showFinal9();
+
     return;
   }
 
-  const candidate = finalistCandidates[finalistIndex];
 
   /*
-    比較位置を保持
+    現在比較する人
   */
-  if(!renderFinal9.position){
-    renderFinal9.position = 0;
-  }
 
-  let pos = renderFinal9.position;
+  const person =
+    finalQueue[0];
 
-  if(pos >= finalists.length){
 
-    if(finalists.length < 9){
-      finalists.push(candidate);
-    }
+  /*
+    最後まで負けた場合
+  */
 
-    finalistIndex++;
-    renderFinal9.position = 0;
+  if(finalPosition >= finalSorted.length){
 
-    renderFinal9();
+    finalSorted.push(person);
+
+    finalQueue.shift();
+
+    finalPosition = 0;
+
+    showFinal9();
+
     return;
   }
 
-  status.textContent =
-    `FINAL9選出　${finalistIndex} / ${finalistCandidates.length}`;
 
-  const target = finalists[pos];
+  const opponent =
+    finalSorted[finalPosition];
+
+
+  status.textContent =
+    "FINAL9を決めています";
+
 
   app.innerHTML = `
-    <div class="question">
-      どちらの顔が好き？ 💜
+
+    <div class="message">
+      FINAL9候補を選出中 💜
+      <br>
+      どちらの顔が好き？
     </div>
 
     <div class="cards">
-      ${cardHTML(target,`chooseFinal9(0)`)}
-      ${cardHTML(candidate,`chooseFinal9(1)`)}
+
+      ${`
+        <div
+          class="card"
+          onclick="finalChoose(0)"
+        >
+          <img src="${esc(opponent.image)}">
+          <div class="name">
+            ${esc(opponent.name)}
+          </div>
+        </div>
+      `}
+
+      ${`
+        <div
+          class="card"
+          onclick="finalChoose(1)"
+        >
+          <img src="${esc(person.image)}">
+          <div class="name">
+            ${esc(person.name)}
+          </div>
+        </div>
+      `}
+
     </div>
 
-    ${buttonsHTML()}
+    <div class="buttons">
+
+      <button
+        class="backBtn"
+        onclick="restart()"
+      >
+        最初からやり直す
+      </button>
+
+    </div>
   `;
 }
 
-function chooseFinal9(choice){
 
-  saveState();
+function finalChoose(choice){
 
-  const candidate = finalistCandidates[finalistIndex];
-  const pos = renderFinal9.position || 0;
+  const person =
+    finalQueue[0];
+
+  const opponent =
+    finalSorted[finalPosition];
+
 
   if(choice === 1){
 
-    finalists.splice(pos,0,candidate);
+    /*
+      新しい人を上に入れる
+    */
 
-    if(finalists.length > 9){
-      finalists.pop();
-    }
+    finalSorted.splice(
+      finalPosition,
+      0,
+      person
+    );
 
-    finalistIndex++;
-    renderFinal9.position = 0;
+    finalQueue.shift();
+
+    finalPosition = 0;
 
   }else{
 
-    renderFinal9.position = pos + 1;
+    /*
+      次の人と比較
+    */
+
+    finalPosition++;
+
   }
 
-  renderFinal9();
+
+  showFinal9();
+
 }
 
 
-/* -----------------------------
-   TOP9ランキング
------------------------------ */
+/* =========================
+   TOP9順位決定
+========================= */
+
+let rankQueue = [];
+
+let rankSorted = [];
+
+let rankPosition = 0;
+
 
 function startRanking(){
 
-  phase = "ranking";
+  rankQueue =
+    [...ranking];
 
-  ranking = [];
-  rankingCandidates = [...finalists];
-  rankingIndex = 0;
+  rankSorted = [];
 
-  renderRanking();
+  rankPosition = 0;
+
+  showRanking();
+
 }
 
-function renderRanking(){
 
-  if(rankingCandidates.length === 0){
+function showRanking(){
+
+  if(rankQueue.length === 0){
+
+    ranking =
+      rankSorted.slice(0,9);
+
     showResult();
+
     return;
   }
 
-  const candidate = rankingCandidates[rankingIndex];
 
-  if(ranking.length === 0){
+  if(rankSorted.length === 0){
 
-    ranking.push(candidate);
-    rankingIndex++;
+    rankSorted.push(
+      rankQueue.shift()
+    );
 
-    renderRanking();
+    showRanking();
+
     return;
   }
 
-  if(!renderRanking.position){
-    renderRanking.position = 0;
-  }
 
-  const pos = renderRanking.position;
+  const person =
+    rankQueue[0];
 
-  /*
-    最後まで負けたら一番下
-  */
-  if(pos >= ranking.length){
 
-    ranking.push(candidate);
+  if(rankPosition >= rankSorted.length){
 
-    rankingIndex++;
-    renderRanking.position = 0;
+    rankSorted.push(person);
 
-    renderRanking();
+    rankQueue.shift();
+
+    rankPosition = 0;
+
+    showRanking();
+
     return;
   }
 
-  const target = ranking[pos];
+
+  const opponent =
+    rankSorted[rankPosition];
+
 
   status.textContent =
-    `TOP9順位決定　${rankingIndex + 1} / ${rankingCandidates.length}`;
+    `TOP9順位決定中`;
 
   app.innerHTML = `
-    <div class="question">
-      どちらの顔が好き？ 💜
+
+    <div class="message">
+      TOP9の順位を決めよう！ 💜
+      <br>
+      どちらの顔が好き？
     </div>
 
     <div class="cards">
-      ${cardHTML(target,`chooseRanking(0)`)}
-      ${cardHTML(candidate,`chooseRanking(1)`)}
+
+      <div
+        class="card"
+        onclick="rankChoose(0)"
+      >
+
+        <img src="${esc(opponent.image)}">
+
+        <div class="name">
+          ${esc(opponent.name)}
+        </div>
+
+      </div>
+
+
+      <div
+        class="card"
+        onclick="rankChoose(1)"
+      >
+
+        <img src="${esc(person.image)}">
+
+        <div class="name">
+          ${esc(person.name)}
+        </div>
+
+      </div>
+
     </div>
 
-    ${buttonsHTML()}
+    <div class="buttons">
+
+      <button
+        class="backBtn"
+        onclick="restart()"
+      >
+        最初からやり直す
+      </button>
+
+    </div>
+
   `;
+
 }
 
-function chooseRanking(choice){
 
-  saveState();
+function rankChoose(choice){
 
-  const candidate = rankingCandidates[rankingIndex];
-  const pos = renderRanking.position || 0;
+  const person =
+    rankQueue[0];
+
 
   if(choice === 1){
 
-    ranking.splice(pos,0,candidate);
+    rankSorted.splice(
+      rankPosition,
+      0,
+      person
+    );
 
-    rankingIndex++;
-    renderRanking.position = 0;
+    rankQueue.shift();
+
+    rankPosition = 0;
 
   }else{
 
-    renderRanking.position = pos + 1;
+    rankPosition++;
+
   }
 
-  renderRanking();
+
+  showRanking();
+
 }
 
 
-/* -----------------------------
+/* =========================
    結果
------------------------------ */
+========================= */
 
 function showResult(){
 
-  phase = "result";
+  status.textContent =
+    "結果発表 🎉";
 
-  status.textContent = "結果発表 🎉";
 
   /*
-    念のため必ず9人にする
+    必ず9人
   */
-  const result = ranking.slice(0,9);
+
+  const result =
+    ranking.slice(0,9);
+
 
   app.innerHTML = `
+
     <div class="resultTitle">
       ✨ あなたの「好きな顔TOP9」✨
     </div>
 
+
     <div class="resultGrid">
+
       ${result.map((person,index) => `
+
         <div class="resultCard">
-          <img src="${esc(person.image)}" alt="">
-          <div class="rank">${index + 1}位</div>
-          <div class="resultName">${esc(person.name)}</div>
+
+          <img
+            src="${esc(person.image)}"
+            alt=""
+          >
+
+          <div class="rank">
+            ${index + 1}位
+          </div>
+
+          <div class="resultName">
+            ${esc(person.name)}
+          </div>
+
         </div>
+
       `).join("")}
+
     </div>
+
 
     <div class="buttons">
-      <button class="restartBtn" onclick="restartGame()">
+
+      <button
+        class="restartBtn"
+        onclick="restart()"
+      >
         🔄 もう一度やる
       </button>
+
     </div>
+
   `;
+
 }
 
 
-/* -----------------------------
-   戻る
------------------------------ */
-
-function goBack(){
-
-  /*
-    比較位置も戻す必要があるため、
-    保存した状態に加えて表示位置も復元
-  */
-
-  if(history.length === 0) return;
-
-  const oldFinalPos =
-    history.length > 0 ? renderFinal9.position : 0;
-
-  const oldRankPos =
-    history.length > 0 ? renderRanking.position : 0;
-
-  restoreState();
-
-  /*
-    状態復元後に必要なら位置を安全に初期化
-  */
-  if(phase === "final9"){
-    if(typeof renderFinal9.position !== "number"){
-      renderFinal9.position = 0;
-    }
-  }
-
-  if(phase === "ranking"){
-    if(typeof renderRanking.position !== "number"){
-      renderRanking.position = 0;
-    }
-  }
-
-  render();
-}
-
-
-/* -----------------------------
+/* =========================
    最初から
------------------------------ */
+========================= */
 
-function restartGame(){
-
-  phase = "preliminary";
+function restart(){
 
   groupIndex = 0;
-  winners = [];
 
-  finalistCandidates = [];
-  finalistIndex = 0;
-  finalists = [];
+  selected = [];
 
-  rankingCandidates = [];
-  rankingIndex = 0;
+  candidates = [];
+
   ranking = [];
+
+  finalSorted = [];
+
+  finalQueue = [];
+
+  finalPosition = 0;
+
+  rankQueue = [];
+
+  rankSorted = [];
+
+  rankPosition = 0;
 
   history = [];
 
-  renderFinal9.position = 0;
-  renderRanking.position = 0;
+  showPreliminary(false);
 
-  render();
 }
 
 
-/* -----------------------------
-   描画
------------------------------ */
-
-function render(){
-
-  if(PEOPLE.length === 0){
-    status.textContent = "写真データが読み込めませんでした";
-    app.innerHTML = `
-      <div style="text-align:center;padding:30px;">
-        写真データを確認してください。
-      </div>
-    `;
-    return;
-  }
-
-  if(phase === "preliminary"){
-    renderPreliminary();
-  }else if(phase === "final9"){
-    renderFinal9();
-  }else if(phase === "ranking"){
-    renderRanking();
-  }else if(phase === "result"){
-    showResult();
-  }
-}
-
-
-/* -----------------------------
+/* =========================
    開始
------------------------------ */
+========================= */
 
-render();
+if(PEOPLE.length === 0){
+
+  status.textContent =
+    "写真データを読み込めませんでした";
+
+  app.innerHTML = `
+    <div class="bigMessage">
+      写真データを確認してください。
+    </div>
+  `;
+
+}else{
+
+  showPreliminary(false);
+
+}
 
 </script>
 
