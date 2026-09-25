@@ -1,10 +1,456 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#7b4bb7"><title>✨ EBiDANNEXT好き顔くらべ ✨</title><style>:root{--p:#7b4bb7;--p2:#a56cdd;--text:#392447;--line:#eadcf7}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#f2e8ff,#fff);color:var(--text);font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif}main{width:min(760px,100%);margin:auto;padding:14px 10px 36px}.hero{text-align:center;padding:8px 4px 12px}h1{font-size:25px;color:var(--p);margin:4px 0}.sub{font-size:13px;opacity:.7}.progress{height:8px;background:#e6d9f3;border-radius:99px;overflow:hidden;margin:8px 0 15px}.bar{height:100%;width:0;background:var(--p2);transition:.25s}.question{text-align:center;font-size:20px;font-weight:900;margin:10px 0 15px;line-height:1.4}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.card{background:#fff;border:2px solid var(--line);border-radius:18px;padding:7px;box-shadow:0 4px 15px #5b397511;cursor:pointer;touch-action:manipulation}.card:active{transform:scale(.985)}.card img{display:block;width:100%;aspect-ratio:3/4;object-fit:contain;background:#faf8fc;border-radius:12px}.name{text-align:center;font-weight:800;font-size:14px;padding:8px 2px 4px;overflow-wrap:anywhere}.btn{border:0;border-radius:16px;background:var(--p);color:#fff;font-weight:900;font-size:17px;padding:14px;width:100%;margin-top:14px}.result{display:flex;flex-direction:column;gap:9px}.rank{display:grid;grid-template-columns:40px 96px 1fr;align-items:center;gap:9px;background:#fff;border-radius:16px;padding:8px;box-shadow:0 3px 12px #5b397511}.rank img{width:96px;height:120px;object-fit:contain;border-radius:10px;background:#faf8fc}.num{font-size:19px;font-weight:900;color:var(--p);text-align:center}@media(max-width:430px){h1{font-size:23px}.question{font-size:18px}.grid{gap:7px}.card{padding:5px}.name{font-size:13px}.rank{grid-template-columns:32px 78px 1fr}.rank img{width:78px;height:100px}}</style></head><body><main><header class="hero"><h1>✨ EBiDANNEXT好き顔くらべ ✨</h1><div class="sub" id="status"></div></header><div class="progress"><div class="bar" id="bar"></div></div><section id="game"></section><section id="result" hidden></section><script>window.onerror=function(message){document.getElementByd('game').innerHTML='<divstyle="padding:20px;text-align:center;color:red;background:white;border-radius:15px">エラー：'+message+'</div>';};</script><script src="people.js"></script><script>
-const ORIGINAL=window.PEOPLE;let pool=[],winners=[],finalists=[],ranking=[],q=0;const game=document.getElementById('game'),result=document.getElementById('result'),bar=document.getElementById('bar'),status=document.getElementById('status');
-function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function setBar(x,t){bar.style.width=Math.max(0,Math.min(100,Math.round(x/t*100)))+'%'}function card(p,fn){const d=document.createElement('button');d.className='card';d.type='button';d.onclick=()=>fn(p);d.innerHTML='<img src="'+p.image+'" alt=""><div class="name">'+esc(p.name)+'</div>';return d}
-function start(){pool=shuffle(ORIGINAL);winners=[];finalists=[];ranking=[];q=0;result.hidden=true;game.hidden=false;showQual()}
-function showQual(){const group=pool.slice(q,q+4);status.textContent='予選 '+(Math.floor(q/4)+1)+' / '+Math.ceil(pool.length/4)+'　（毎回ランダム）';game.innerHTML='<div class="question">この'+group.length+'人の中で一番好きな顔は？</div>';const g=document.createElement('div');g.className='grid';group.forEach(p=>g.appendChild(card(p,chooseQual)));game.appendChild(g);setBar(q,pool.length)}
-function chooseQual(p){winners.push(p);q+=4;if(q<pool.length)showQual();else select9()}
-function select9(){let cur=shuffle(winners);function round(){if(cur.length<=9){finalists=cur;rank9();return}const next=[];let i=0;function cmp(){if(i>=cur.length){cur=shuffle(next);round();return}if(i===cur.length-1){next.push(cur[i++]);cmp();return}const a=cur[i],b=cur[i+1];status.textContent='最終候補9人を選出中';game.innerHTML='<div class="question">この2人から残すのは？</div>';const g=document.createElement('div');g.className='grid';g.appendChild(card(a,p=>{next.push(p);i+=2;cmp()}));g.appendChild(card(b,p=>{next.push(p);i+=2;cmp()}));game.appendChild(g)}}cmp()}round()}
-function rank9(){ranking=[];const order=shuffle(finalists);let i=0,c,pos;function next(){if(i>=order.length){showResult();return}c=order[i++];if(!ranking.length){ranking.push(c);next();return}pos=0;cmp()}function cmp(){if(pos>=ranking.length){ranking.push(c);next();return}const o=ranking[pos];status.textContent='TOP9順位決定　'+i+' / 9';game.innerHTML='<div class="question">どちらの顔がより好き？</div><div class="sub" style="text-align:center">現在の順位 '+(pos+1)+'位との比較</div>';const g=document.createElement('div');g.className='grid';g.appendChild(card(c,p=>{ranking.splice(pos,0,p);next()}));g.appendChild(card(o,p=>{pos++;cmp()}));game.appendChild(g)}}next()}
-function showResult(){game.hidden=true;result.hidden=false;status.textContent='結果発表';bar.style.width='100%';result.innerHTML='<div class="question">✨ あなたの「好きな顔TOP9」✨</div><div class="result">'+ranking.map((p,i)=>'<div class="rank"><div class="num">'+(i+1)+'位</div><img src="'+p.image+'" alt=""><div class="name">'+esc(p.name)+'</div></div>').join('')+'</div><button class="btn" type="button" onclick="start()">もう一度遊ぶ</button><div style="text-align:center;font-size:12px;opacity:.62;line-height:1.6;margin-top:14px">元の画像ファイルをそのまま表示しています。画像加工・AI補正・localStorageへの保存は行っていません。</div>'}start();
-</script></main></body></html>
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>✨ EBiDANNEXT好き顔くらべ ✨</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:linear-gradient(180deg,#f3e7ff,#fff);
+  color:#392447;
+  font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif;
+}
+
+main{
+  max-width:760px;
+  margin:auto;
+  padding:16px 10px 40px;
+}
+
+h1{
+  text-align:center;
+  color:#7b4bb7;
+  font-size:24px;
+  margin:8px 0 6px;
+}
+
+#status{
+  text-align:center;
+  font-size:13px;
+  opacity:.7;
+  margin-bottom:12px;
+}
+
+.progress{
+  height:8px;
+  background:#e5d8f2;
+  border-radius:20px;
+  overflow:hidden;
+  margin-bottom:18px;
+}
+
+.bar{
+  height:100%;
+  width:0;
+  background:#a56cdd;
+  transition:.2s;
+}
+
+.question{
+  text-align:center;
+  font-size:20px;
+  font-weight:900;
+  margin:12px 0 16px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.card{
+  border:2px solid #eadcf7;
+  background:white;
+  border-radius:18px;
+  padding:7px;
+  box-shadow:0 4px 14px #5b397515;
+  cursor:pointer;
+}
+
+.card img{
+  display:block;
+  width:100%;
+  aspect-ratio:3/4;
+  object-fit:contain;
+  background:#faf8fc;
+  border-radius:12px;
+}
+
+.name{
+  text-align:center;
+  font-weight:800;
+  font-size:14px;
+  padding:8px 2px 4px;
+  overflow-wrap:anywhere;
+}
+
+.start{
+  display:block;
+  width:100%;
+  border:0;
+  border-radius:18px;
+  background:#7b4bb7;
+  color:white;
+  font-weight:900;
+  font-size:18px;
+  padding:15px;
+  margin-top:18px;
+}
+
+.rank{
+  display:grid;
+  grid-template-columns:45px 90px 1fr;
+  align-items:center;
+  gap:9px;
+  background:white;
+  border-radius:16px;
+  padding:8px;
+  margin-bottom:9px;
+}
+
+.rank img{
+  width:90px;
+  height:115px;
+  object-fit:contain;
+  border-radius:10px;
+  background:#faf8fc;
+}
+
+.num{
+  text-align:center;
+  font-size:18px;
+  font-weight:900;
+  color:#7b4bb7;
+}
+
+.result-name{
+  font-weight:800;
+}
+
+@media(max-width:430px){
+  h1{font-size:22px}
+  .question{font-size:18px}
+  .card{padding:5px}
+  .name{font-size:13px}
+  .rank{
+    grid-template-columns:32px 76px 1fr;
+  }
+  .rank img{
+    width:76px;
+    height:98px;
+  }
+}
+</style>
+</head>
+
+<body>
+<main>
+
+<h1>✨ EBiDANNEXT好き顔くらべ ✨</h1>
+
+<div id="status">読み込み中…</div>
+
+<div class="progress">
+  <div class="bar" id="bar"></div>
+</div>
+
+<section id="game"></section>
+<section id="result"></section>
+
+</main>
+
+<script src="people.js"></script>
+
+<script>
+const people = window.PEOPLE || [];
+
+const game = document.getElementById("game");
+const result = document.getElementById("result");
+const statusText = document.getElementById("status");
+const bar = document.getElementById("bar");
+
+let pool = [];
+let winners = [];
+let finalists = [];
+let ranking = [];
+let index = 0;
+
+function shuffle(array){
+  const a = array.slice();
+
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+
+  return a;
+}
+
+function escapeHTML(text){
+  return String(text).replace(/[&<>"']/g,function(c){
+    return {
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#39;"
+    }[c];
+  });
+}
+
+function progress(value,total){
+  if(!total)return;
+  bar.style.width=Math.round(value/total*100)+"%";
+}
+
+function makeCard(person,callback){
+
+  const button=document.createElement("button");
+
+  button.className="card";
+  button.type="button";
+
+  button.innerHTML=
+    '<img src="'+person.image+'" alt="">' +
+    '<div class="name">'+escapeHTML(person.name)+'</div>';
+
+  button.onclick=function(){
+    callback(person);
+  };
+
+  return button;
+}
+
+function start(){
+
+  if(people.length===0){
+    statusText.textContent="people.jsを読み込めませんでした";
+    game.innerHTML=
+      "<div class='question'>写真データを確認してください。</div>";
+    return;
+  }
+
+  pool=shuffle(people);
+  winners=[];
+  finalists=[];
+  ranking=[];
+  index=0;
+
+  result.innerHTML="";
+  result.hidden=true;
+  game.hidden=false;
+
+  showPreliminary();
+}
+
+function showPreliminary(){
+
+  const group=pool.slice(index,index+4);
+
+  statusText.textContent=
+    "予選 "+(Math.floor(index/4)+1)+" / "+Math.ceil(pool.length/4);
+
+  game.innerHTML=
+    '<div class="question">この'+group.length+'人の中で<br>一番好きな顔は？</div>';
+
+  const grid=document.createElement("div");
+  grid.className="grid";
+
+  group.forEach(function(person){
+    grid.appendChild(
+      makeCard(person,choosePreliminary)
+    );
+  });
+
+  game.appendChild(grid);
+
+  progress(index,pool.length);
+}
+
+function choosePreliminary(person){
+
+  winners.push(person);
+
+  index+=4;
+
+  if(index<pool.length){
+    showPreliminary();
+  }else{
+    chooseFinalists();
+  }
+}
+
+function chooseFinalists(){
+
+  let current=shuffle(winners);
+
+  function round(){
+
+    if(current.length<=9){
+      finalists=current;
+      makeRanking();
+      return;
+    }
+
+    const next=[];
+    let i=0;
+
+    function compare(){
+
+      if(i>=current.length){
+        current=shuffle(next);
+        round();
+        return;
+      }
+
+      if(i===current.length-1){
+        next.push(current[i]);
+        i++;
+        compare();
+        return;
+      }
+
+      const a=current[i];
+      const b=current[i+1];
+
+      statusText.textContent="最終候補9人を選出中";
+
+      game.innerHTML=
+        '<div class="question">この2人から<br>残したい方は？</div>';
+
+      const grid=document.createElement("div");
+      grid.className="grid";
+
+      grid.appendChild(
+        makeCard(a,function(person){
+          next.push(person);
+          i+=2;
+          compare();
+        })
+      );
+
+      grid.appendChild(
+        makeCard(b,function(person){
+          next.push(person);
+          i+=2;
+          compare();
+        })
+      );
+
+      game.appendChild(grid);
+    }
+
+    compare();
+  }
+
+  round();
+}
+
+function makeRanking(){
+
+  ranking=[];
+
+  const order=shuffle(finalists);
+
+  let i=0;
+
+  function nextPerson(){
+
+    if(i>=order.length){
+      showResult();
+      return;
+    }
+
+    const person=order[i];
+
+    i++;
+
+    if(ranking.length===0){
+      ranking.push(person);
+      nextPerson();
+      return;
+    }
+
+    let position=0;
+
+    function compare(){
+
+      if(position>=ranking.length){
+        ranking.push(person);
+        nextPerson();
+        return;
+      }
+
+      const other=ranking[position];
+
+      statusText.textContent=
+        "TOP9順位決定　"+i+" / 9";
+
+      game.innerHTML=
+        '<div class="question">どちらの顔がより好き？</div>';
+
+      const grid=document.createElement("div");
+      grid.className="grid";
+
+      grid.appendChild(
+        makeCard(person,function(){
+          ranking.splice(position,0,person);
+          nextPerson();
+        })
+      );
+
+      grid.appendChild(
+        makeCard(other,function(){
+          position++;
+          compare();
+        })
+      );
+
+      game.appendChild(grid);
+    }
+
+    compare();
+  }
+
+  nextPerson();
+}
+
+function showResult(){
+
+  game.hidden=true;
+  result.hidden=false;
+
+  statusText.textContent="結果発表";
+  bar.style.width="100%";
+
+  let html=
+    '<div class="question">✨ あなたの「好きな顔TOP9」✨</div>';
+
+  ranking.forEach(function(person,i){
+
+    html+=
+      '<div class="rank">' +
+        '<div class="num">'+(i+1)+"位</div>" +
+        '<img src="'+person.image+'" alt="">' +
+        '<div class="result-name">'+
+          escapeHTML(person.name)+
+        "</div>" +
+      "</div>";
+  });
+
+  html+=
+    '<button class="start" onclick="start()">もう一度遊ぶ</button>';
+
+  result.innerHTML=html;
+}
+
+start();
+</script>
+
+</body>
+</html>
