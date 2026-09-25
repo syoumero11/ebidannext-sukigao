@@ -168,6 +168,9 @@ h1{
 
 <script>
 const people = window.PEOPLE || [];
+people.forEach(function(p){p.image=p.image.replace(/^images\//,"");});
+
+const game = document.getElementById("game");
 
 const game = document.getElementById("game");
 const result = document.getElementById("result");
