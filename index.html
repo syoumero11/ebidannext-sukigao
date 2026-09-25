@@ -1,8 +1,8 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>✨ EBiDANNEXT好き顔くらべ ✨</title>
 
 <style>
@@ -12,170 +12,205 @@
 
 body{
   margin:0;
-  background:linear-gradient(180deg,#f3e7ff,#fff);
-  color:#392447;
-  font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Noto Sans JP",
+    "Hiragino Kaku Gothic ProN",
+    "Yu Gothic",
+    sans-serif;
+  background:linear-gradient(180deg,#f8efff,#ffffff);
+  color:#3b2450;
 }
 
-main{
-  width:min(760px,100%);
-  margin:auto;
-  padding:14px 10px 40px;
+header{
+  padding:18px 12px 10px;
+  text-align:center;
 }
 
 h1{
-  text-align:center;
-  color:#7b4bb7;
-  font-size:24px;
-  margin:6px 0;
+  margin:0;
+  font-size:clamp(22px,6vw,34px);
+  color:#8b42c7;
 }
 
-.status{
-  text-align:center;
-  font-size:13px;
-  opacity:.7;
-  margin-bottom:10px;
+#status{
+  margin-top:8px;
+  font-size:14px;
+  color:#765681;
 }
 
-.progress{
-  height:8px;
-  background:#e5d8f2;
-  border-radius:99px;
-  overflow:hidden;
-  margin-bottom:18px;
-}
-
-.bar{
-  height:100%;
-  width:0;
-  background:#a56cdd;
-  transition:.2s;
+main{
+  width:min(100%,900px);
+  margin:auto;
+  padding:10px 12px 30px;
 }
 
 .question{
   text-align:center;
   font-size:20px;
-  font-weight:900;
-  line-height:1.45;
+  font-weight:bold;
   margin:12px 0 16px;
 }
 
-.grid{
+.cards{
   display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-columns:repeat(4,1fr);
   gap:10px;
 }
 
 .card{
-  appearance:none;
-  border:2px solid #eadcf7;
-  background:#fff;
-  border-radius:18px;
+  background:white;
+  border:2px solid #ead7f7;
+  border-radius:16px;
   padding:7px;
-  box-shadow:0 4px 14px #5b397515;
+  box-shadow:0 4px 12px rgba(100,50,130,.10);
   cursor:pointer;
-  width:100%;
-  color:#392447;
+  transition:.15s;
 }
 
 .card:active{
-  transform:scale(.985);
+  transform:scale(.97);
 }
 
 .card img{
-  display:block;
   width:100%;
   aspect-ratio:3/4;
   object-fit:contain;
-  background:#faf8fc;
-  border-radius:12px;
+  display:block;
+  border-radius:11px;
+  background:#f7f2fa;
 }
 
 .name{
   text-align:center;
-  font-weight:800;
   font-size:14px;
+  font-weight:bold;
   padding:8px 2px 4px;
-  overflow-wrap:anywhere;
+  line-height:1.3;
+  word-break:break-all;
 }
 
-.result{
+.buttons{
   display:flex;
-  flex-direction:column;
-  gap:9px;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:20px;
+}
+
+button{
+  border:0;
+  border-radius:999px;
+  padding:12px 22px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.backBtn{
+  background:#eee4f4;
+  color:#634575;
+}
+
+.backBtn:disabled{
+  opacity:.4;
+  cursor:default;
+}
+
+.restartBtn{
+  background:#8b42c7;
+  color:white;
+}
+
+.resultTitle{
+  text-align:center;
+  font-size:24px;
+  color:#8b42c7;
+  margin:10px 0 18px;
+}
+
+.resultGrid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.resultCard{
+  background:white;
+  border:2px solid #ead7f7;
+  border-radius:15px;
+  padding:7px;
+  box-shadow:0 4px 12px rgba(100,50,130,.10);
+}
+
+.resultCard img{
+  width:100%;
+  aspect-ratio:3/4;
+  object-fit:contain;
+  display:block;
+  border-radius:10px;
+  background:#f7f2fa;
 }
 
 .rank{
-  display:grid;
-  grid-template-columns:42px 96px 1fr;
-  align-items:center;
-  gap:9px;
-  background:#fff;
-  border-radius:16px;
-  padding:8px;
-  box-shadow:0 3px 12px #5b397515;
-}
-
-.rank img{
-  width:96px;
-  height:120px;
-  object-fit:contain;
-  border-radius:10px;
-  background:#faf8fc;
-}
-
-.num{
   text-align:center;
-  font-size:18px;
+  font-size:20px;
   font-weight:900;
-  color:#7b4bb7;
+  color:#8b42c7;
+  margin-top:6px;
 }
 
-.result-name{
-  font-weight:800;
-  overflow-wrap:anywhere;
+.resultName{
+  text-align:center;
+  font-size:13px;
+  font-weight:bold;
+  line-height:1.3;
+  min-height:34px;
+  padding:3px 1px;
+  word-break:break-all;
 }
 
-.btn{
-  width:100%;
-  border:0;
-  border-radius:16px;
-  background:#7b4bb7;
-  color:white;
-  font-weight:900;
-  font-size:17px;
-  padding:14px;
-  margin-top:14px;
-}
-
-@media(max-width:430px){
-  h1{
-    font-size:22px;
+@media(max-width:650px){
+  .cards{
+    grid-template-columns:repeat(2,1fr);
+    gap:9px;
   }
 
   .question{
     font-size:18px;
   }
 
-  .grid{
-    gap:7px;
-  }
-
-  .card{
-    padding:5px;
-  }
-
-  .name{
+  .card .name{
     font-size:13px;
   }
 
-  .rank{
-    grid-template-columns:32px 78px 1fr;
+  .resultGrid{
+    grid-template-columns:repeat(3,1fr);
+    gap:7px;
   }
 
-  .rank img{
-    width:78px;
-    height:100px;
+  .resultCard{
+    padding:5px;
+    border-radius:12px;
+  }
+
+  .rank{
+    font-size:16px;
+  }
+
+  .resultName{
+    font-size:11px;
+  }
+}
+
+@media(max-width:360px){
+  .resultGrid{
+    gap:5px;
+  }
+
+  .resultName{
+    font-size:10px;
   }
 }
 </style>
@@ -183,518 +218,540 @@ h1{
 
 <body>
 
-<main>
+<header>
+  <h1>✨ EBiDANNEXT好き顔くらべ ✨</h1>
+  <div id="status">読み込み中…</div>
+</header>
 
-<h1>✨ EBiDANNEXT好き顔くらべ ✨</h1>
-
-<div class="status" id="status">読み込み中…</div>
-
-<div class="progress">
-  <div class="bar" id="bar"></div>
-</div>
-
-<section id="game"></section>
-
-<section id="result" hidden></section>
-
-</main>
+<main id="app"></main>
 
 <script src="people.js"></script>
 
 <script>
+"use strict";
 
-const PEOPLE = window.PEOPLE || [];
-
-const game = document.getElementById("game");
-const result = document.getElementById("result");
-const statusBox = document.getElementById("status");
-const bar = document.getElementById("bar");
+const PEOPLE = Array.isArray(window.PEOPLE) ? window.PEOPLE : [];
 
 /*
   people.js の
   images/001.jpg
-  images/002.jpg
-  などを、GitHub Pages上の実際の画像URLに変換する。
+  のような指定を、
+  GitHub Pages の実際の画像URLに変換
 */
-PEOPLE.forEach(function(person){
-
-  const fileName = String(person.image).split("/").pop();
+PEOPLE.forEach(person => {
+  const fileName = String(person.image || "").split("/").pop();
 
   person.image =
     "https://syoumero11.github.io/ebidannext-sukigao/" +
     fileName;
 });
 
+const app = document.getElementById("app");
+const status = document.getElementById("status");
 
-let pool = [];
+/* -----------------------------
+   ゲーム状態
+----------------------------- */
+
+let phase = "preliminary";
+
+/* 予選 */
+let groupIndex = 0;
 let winners = [];
+
+/* FINAL9 */
+let finalistCandidates = [];
+let finalistIndex = 0;
 let finalists = [];
+
+/* TOP9 */
+let rankingCandidates = [];
+let rankingIndex = 0;
 let ranking = [];
 
-let groupIndex = 0;
+/* 戻る用 */
+let history = [];
 
 
-/* ------------------------------
-   ランダム
------------------------------- */
-
-function shuffle(array){
-
-  const a = array.slice();
-
-  for(let i=a.length-1;i>0;i--){
-
-    const j =
-      Math.floor(Math.random()*(i+1));
-
-    const temp = a[i];
-
-    a[i] = a[j];
-    a[j] = temp;
-  }
-
-  return a;
-}
-
-
-/* ------------------------------
-   HTMLエスケープ
------------------------------- */
-
-function escapeHTML(text){
-
-  return String(text).replace(
-    /[&<>"']/g,
-    function(c){
-
-      return {
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        '"':"&quot;",
-        "'":"&#39;"
-      }[c];
-
-    }
-  );
-}
-
-
-/* ------------------------------
-   進捗バー
------------------------------- */
-
-function setProgress(current,total){
-
-  if(!total){
-    bar.style.width = "0%";
-    return;
-  }
-
-  const percent =
-    Math.round(current / total * 100);
-
-  bar.style.width =
-    Math.max(0,Math.min(100,percent)) + "%";
-}
-
-
-/* ------------------------------
-   カード作成
------------------------------- */
-
-function createCard(person,callback){
-
-  const button =
-    document.createElement("button");
-
-  button.className = "card";
-  button.type = "button";
-
-  const img =
-    document.createElement("img");
-
-  img.src = person.image;
-  img.alt = "";
-
-  const name =
-    document.createElement("div");
-
-  name.className = "name";
-  name.textContent = person.name;
-
-  button.appendChild(img);
-  button.appendChild(name);
-
-  button.onclick = function(){
-
-    callback(person);
-  };
-
-  return button;
-}
-
-
-/* ------------------------------
-   スタート
------------------------------- */
-
-function start(){
-
-  if(PEOPLE.length === 0){
-
-    statusBox.textContent =
-      "写真データを読み込めませんでした。";
-
-    game.innerHTML =
-      "<div class='question'>people.jsを確認してください。</div>";
-
-    return;
-  }
-
-  pool = shuffle(PEOPLE);
-
-  winners = [];
-  finalists = [];
-  ranking = [];
-
-  groupIndex = 0;
-
-  result.hidden = true;
-  game.hidden = false;
-
-  showPreliminary();
-}
-
-
-/* ------------------------------
-   予選
+/* -----------------------------
    122人 → 4人ずつ
------------------------------- */
+----------------------------- */
 
-function showPreliminary(){
+function makeGroups(){
+  const groups = [];
 
-  const startIndex =
-    groupIndex * 4;
+  for(let i = 0; i < PEOPLE.length; i += 4){
+    groups.push(PEOPLE.slice(i, i + 4));
+  }
 
-  const group =
-    pool.slice(startIndex,startIndex + 4);
+  return groups;
+}
 
-  const totalGroups =
-    Math.ceil(pool.length / 4);
+const groups = makeGroups();
 
-  statusBox.textContent =
-    "予選 " +
-    (groupIndex + 1) +
-    " / " +
-    totalGroups;
 
-  game.innerHTML =
-    '<div class="question">' +
-    "この" +
-    group.length +
-    "人の中で<br>一番好きな顔は？" +
-    "</div>";
+/* -----------------------------
+   状態保存
+----------------------------- */
 
-  const grid =
-    document.createElement("div");
-
-  grid.className = "grid";
-
-  group.forEach(function(person){
-
-    grid.appendChild(
-      createCard(person,choosePreliminary)
-    );
-
-  });
-
-  game.appendChild(grid);
-
-  setProgress(
+function saveState(){
+  history.push(JSON.stringify({
+    phase,
     groupIndex,
-    totalGroups
-  );
+    winners,
+    finalistCandidates,
+    finalistIndex,
+    finalists,
+    rankingCandidates,
+    rankingIndex,
+    ranking
+  }));
+}
+
+function restoreState(){
+  if(history.length === 0) return;
+
+  const s = JSON.parse(history.pop());
+
+  phase = s.phase;
+  groupIndex = s.groupIndex;
+  winners = s.winners;
+  finalistCandidates = s.finalistCandidates;
+  finalistIndex = s.finalistIndex;
+  finalists = s.finalists;
+  rankingCandidates = s.rankingCandidates;
+  rankingIndex = s.rankingIndex;
+  ranking = s.ranking;
+
+  render();
 }
 
 
-function choosePreliminary(person){
+/* -----------------------------
+   共通UI
+----------------------------- */
 
-  winners.push(person);
+function esc(str){
+  return String(str)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#39;");
+}
+
+function cardHTML(person, onclick){
+  return `
+    <div class="card" onclick="${onclick}">
+      <img src="${esc(person.image)}" alt="">
+      <div class="name">${esc(person.name)}</div>
+    </div>
+  `;
+}
+
+function buttonsHTML(){
+  return `
+    <div class="buttons">
+      <button class="backBtn"
+        onclick="goBack()"
+        ${history.length === 0 ? "disabled" : ""}>
+        ↩️ 1つ戻る
+      </button>
+    </div>
+  `;
+}
+
+
+/* -----------------------------
+   予選
+----------------------------- */
+
+function renderPreliminary(){
+
+  if(groupIndex >= groups.length){
+    startFinal9();
+    return;
+  }
+
+  const group = groups[groupIndex];
+
+  status.textContent =
+    `予選 ${groupIndex + 1} / ${groups.length}`;
+
+  app.innerHTML = `
+    <div class="question">
+      この中で一番好きな顔を選んでね 💜
+    </div>
+
+    <div class="cards">
+      ${group.map((person,i) =>
+        cardHTML(person,`choosePreliminary(${i})`)
+      ).join("")}
+    </div>
+
+    ${buttonsHTML()}
+  `;
+}
+
+function choosePreliminary(index){
+
+  saveState();
+
+  const group = groups[groupIndex];
+
+  winners.push(group[index]);
 
   groupIndex++;
 
-  const totalGroups =
-    Math.ceil(pool.length / 4);
+  render();
+}
 
-  if(groupIndex < totalGroups){
 
-    showPreliminary();
+/* -----------------------------
+   FINAL9開始
+----------------------------- */
+
+function startFinal9(){
+
+  phase = "final9";
+
+  finalistCandidates = [...winners];
+  finalistIndex = 0;
+  finalists = [];
+
+  renderFinal9();
+}
+
+
+/*
+  31人前後の予選勝者から
+  好み順に並べながら上位9人を残す
+*/
+function renderFinal9(){
+
+  if(finalistCandidates.length === 0){
+    startRanking();
+    return;
+  }
+
+  /*
+    最初の1人
+  */
+  if(finalists.length === 0){
+    finalists.push(finalistCandidates[0]);
+    finalistIndex = 1;
+  }
+
+  if(finalistIndex >= finalistCandidates.length){
+    startRanking();
+    return;
+  }
+
+  const candidate = finalistCandidates[finalistIndex];
+
+  /*
+    比較位置を保持
+  */
+  if(!renderFinal9.position){
+    renderFinal9.position = 0;
+  }
+
+  let pos = renderFinal9.position;
+
+  if(pos >= finalists.length){
+
+    if(finalists.length < 9){
+      finalists.push(candidate);
+    }
+
+    finalistIndex++;
+    renderFinal9.position = 0;
+
+    renderFinal9();
+    return;
+  }
+
+  status.textContent =
+    `FINAL9選出　${finalistIndex} / ${finalistCandidates.length}`;
+
+  const target = finalists[pos];
+
+  app.innerHTML = `
+    <div class="question">
+      どちらの顔が好き？ 💜
+    </div>
+
+    <div class="cards">
+      ${cardHTML(target,`chooseFinal9(0)`)}
+      ${cardHTML(candidate,`chooseFinal9(1)`)}
+    </div>
+
+    ${buttonsHTML()}
+  `;
+}
+
+function chooseFinal9(choice){
+
+  saveState();
+
+  const candidate = finalistCandidates[finalistIndex];
+  const pos = renderFinal9.position || 0;
+
+  if(choice === 1){
+
+    finalists.splice(pos,0,candidate);
+
+    if(finalists.length > 9){
+      finalists.pop();
+    }
+
+    finalistIndex++;
+    renderFinal9.position = 0;
 
   }else{
 
-    selectFinalists();
+    renderFinal9.position = pos + 1;
   }
+
+  renderFinal9();
 }
 
 
-/* ------------------------------
-   予選勝者からTOP9候補を選ぶ
------------------------------- */
+/* -----------------------------
+   TOP9ランキング
+----------------------------- */
 
-function selectFinalists(){
+function startRanking(){
 
-  let current =
-    shuffle(winners);
-
-  function round(){
-
-    if(current.length <= 9){
-
-      finalists = current;
-
-      rankFinalists();
-
-      return;
-    }
-
-    const next = [];
-
-    let i = 0;
-
-    function compare(){
-
-      if(i >= current.length){
-
-        current = shuffle(next);
-
-        round();
-
-        return;
-      }
-
-      /*
-        奇数で最後に1人余った場合は
-        そのまま次へ進める。
-      */
-      if(i === current.length - 1){
-
-        next.push(current[i]);
-
-        i++;
-
-        compare();
-
-        return;
-      }
-
-      const a = current[i];
-      const b = current[i + 1];
-
-      statusBox.textContent =
-        "最終候補9人を選出中";
-
-      game.innerHTML =
-        '<div class="question">' +
-        "この2人から<br>残したい方は？" +
-        "</div>";
-
-      const grid =
-        document.createElement("div");
-
-      grid.className = "grid";
-
-      grid.appendChild(
-        createCard(a,function(person){
-
-          next.push(person);
-
-          i += 2;
-
-          compare();
-        })
-      );
-
-      grid.appendChild(
-        createCard(b,function(person){
-
-          next.push(person);
-
-          i += 2;
-
-          compare();
-        })
-      );
-
-      game.appendChild(grid);
-    }
-
-    compare();
-  }
-
-  round();
-}
-
-
-/* ------------------------------
-   TOP9順位決定
------------------------------- */
-
-function rankFinalists(){
+  phase = "ranking";
 
   ranking = [];
+  rankingCandidates = [...finalists];
+  rankingIndex = 0;
 
-  const order =
-    shuffle(finalists);
+  renderRanking();
+}
 
-  let index = 0;
+function renderRanking(){
 
-  function nextPerson(){
-
-    if(index >= order.length){
-
-      showResult();
-
-      return;
-    }
-
-    const person =
-      order[index];
-
-    index++;
-
-    if(ranking.length === 0){
-
-      ranking.push(person);
-
-      nextPerson();
-
-      return;
-    }
-
-    let position = 0;
-
-    function compare(){
-
-      if(position >= ranking.length){
-
-        ranking.push(person);
-
-        nextPerson();
-
-        return;
-      }
-
-      const other =
-        ranking[position];
-
-      statusBox.textContent =
-        "TOP9順位決定　" +
-        index +
-        " / 9";
-
-      game.innerHTML =
-        '<div class="question">' +
-        "どちらの顔がより好き？" +
-        "</div>";
-
-      const grid =
-        document.createElement("div");
-
-      grid.className = "grid";
-
-      grid.appendChild(
-        createCard(person,function(){
-
-          ranking.splice(
-            position,
-            0,
-            person
-          );
-
-          nextPerson();
-        })
-      );
-
-      grid.appendChild(
-        createCard(other,function(){
-
-          position++;
-
-          compare();
-        })
-      );
-
-      game.appendChild(grid);
-    }
-
-    compare();
+  if(rankingCandidates.length === 0){
+    showResult();
+    return;
   }
 
-  nextPerson();
+  const candidate = rankingCandidates[rankingIndex];
+
+  if(ranking.length === 0){
+
+    ranking.push(candidate);
+    rankingIndex++;
+
+    renderRanking();
+    return;
+  }
+
+  if(!renderRanking.position){
+    renderRanking.position = 0;
+  }
+
+  const pos = renderRanking.position;
+
+  /*
+    最後まで負けたら一番下
+  */
+  if(pos >= ranking.length){
+
+    ranking.push(candidate);
+
+    rankingIndex++;
+    renderRanking.position = 0;
+
+    renderRanking();
+    return;
+  }
+
+  const target = ranking[pos];
+
+  status.textContent =
+    `TOP9順位決定　${rankingIndex + 1} / ${rankingCandidates.length}`;
+
+  app.innerHTML = `
+    <div class="question">
+      どちらの顔が好き？ 💜
+    </div>
+
+    <div class="cards">
+      ${cardHTML(target,`chooseRanking(0)`)}
+      ${cardHTML(candidate,`chooseRanking(1)`)}
+    </div>
+
+    ${buttonsHTML()}
+  `;
+}
+
+function chooseRanking(choice){
+
+  saveState();
+
+  const candidate = rankingCandidates[rankingIndex];
+  const pos = renderRanking.position || 0;
+
+  if(choice === 1){
+
+    ranking.splice(pos,0,candidate);
+
+    rankingIndex++;
+    renderRanking.position = 0;
+
+  }else{
+
+    renderRanking.position = pos + 1;
+  }
+
+  renderRanking();
 }
 
 
-/* ------------------------------
+/* -----------------------------
    結果
------------------------------- */
+----------------------------- */
 
 function showResult(){
 
-  game.hidden = true;
+  phase = "result";
 
-  result.hidden = false;
+  status.textContent = "結果発表 🎉";
 
-  statusBox.textContent =
-    "結果発表";
+  /*
+    念のため必ず9人にする
+  */
+  const result = ranking.slice(0,9);
 
-  bar.style.width =
-    "100%";
+  app.innerHTML = `
+    <div class="resultTitle">
+      ✨ あなたの「好きな顔TOP9」✨
+    </div>
 
-  let html =
-    '<div class="question">' +
-    '✨ あなたの「好きな顔TOP9」✨' +
-    "</div>";
+    <div class="resultGrid">
+      ${result.map((person,index) => `
+        <div class="resultCard">
+          <img src="${esc(person.image)}" alt="">
+          <div class="rank">${index + 1}位</div>
+          <div class="resultName">${esc(person.name)}</div>
+        </div>
+      `).join("")}
+    </div>
 
-  html +=
-    '<div class="result">';
-
-  ranking.forEach(function(person,index){
-
-    html +=
-      '<div class="rank">' +
-
-      '<div class="num">' +
-      (index + 1) +
-      "位</div>" +
-
-      '<img src="' +
-      person.image +
-      '" alt="">' +
-
-      '<div class="result-name">' +
-      escapeHTML(person.name) +
-      "</div>" +
-
-      "</div>";
-  });
-
-  html +=
-    "</div>" +
-
-    '<button class="btn" type="button" onclick="start()">' +
-    "もう一度遊ぶ" +
-    "</button>";
-
-  result.innerHTML = html;
+    <div class="buttons">
+      <button class="restartBtn" onclick="restartGame()">
+        🔄 もう一度やる
+      </button>
+    </div>
+  `;
 }
 
 
-/* ------------------------------
-   起動
------------------------------- */
+/* -----------------------------
+   戻る
+----------------------------- */
 
-start();
+function goBack(){
+
+  /*
+    比較位置も戻す必要があるため、
+    保存した状態に加えて表示位置も復元
+  */
+
+  if(history.length === 0) return;
+
+  const oldFinalPos =
+    history.length > 0 ? renderFinal9.position : 0;
+
+  const oldRankPos =
+    history.length > 0 ? renderRanking.position : 0;
+
+  restoreState();
+
+  /*
+    状態復元後に必要なら位置を安全に初期化
+  */
+  if(phase === "final9"){
+    if(typeof renderFinal9.position !== "number"){
+      renderFinal9.position = 0;
+    }
+  }
+
+  if(phase === "ranking"){
+    if(typeof renderRanking.position !== "number"){
+      renderRanking.position = 0;
+    }
+  }
+
+  render();
+}
+
+
+/* -----------------------------
+   最初から
+----------------------------- */
+
+function restartGame(){
+
+  phase = "preliminary";
+
+  groupIndex = 0;
+  winners = [];
+
+  finalistCandidates = [];
+  finalistIndex = 0;
+  finalists = [];
+
+  rankingCandidates = [];
+  rankingIndex = 0;
+  ranking = [];
+
+  history = [];
+
+  renderFinal9.position = 0;
+  renderRanking.position = 0;
+
+  render();
+}
+
+
+/* -----------------------------
+   描画
+----------------------------- */
+
+function render(){
+
+  if(PEOPLE.length === 0){
+    status.textContent = "写真データが読み込めませんでした";
+    app.innerHTML = `
+      <div style="text-align:center;padding:30px;">
+        写真データを確認してください。
+      </div>
+    `;
+    return;
+  }
+
+  if(phase === "preliminary"){
+    renderPreliminary();
+  }else if(phase === "final9"){
+    renderFinal9();
+  }else if(phase === "ranking"){
+    renderRanking();
+  }else if(phase === "result"){
+    showResult();
+  }
+}
+
+
+/* -----------------------------
+   開始
+----------------------------- */
+
+render();
 
 </script>
 
