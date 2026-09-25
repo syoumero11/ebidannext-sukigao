@@ -164,7 +164,7 @@ h1{
 
 </main>
 
-<script src="people.js"></script>
+<script src="people.js" onerror="document.getElementById('status').textContent='people.jsの読み込みに失敗';"></script>
 
 <script>
 const people = window.PEOPLE || [];
